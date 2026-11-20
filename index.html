@@ -1,0 +1,1755 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<base target="_top">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Kanit', sans-serif;
+  background: #eeeceb;
+  color: #393536;
+}
+
+header {
+  background: linear-gradient(135deg,#70191f,#a33b40);
+  color: white;
+  text-align: center;
+  padding: 25px 12px;
+}
+
+.logo {
+  width: 115px;
+  height: 115px;
+  border-radius: 50%;
+  background: white;
+  object-fit: contain;
+  padding: 4px;
+  border: 3px solid #d5d0ce;
+}
+
+header h1 {
+  margin: 10px 0 3px;
+  font-size: 23px;
+}
+
+header p {
+  margin: 0;
+  color: #f2dddd;
+}
+
+.container {
+  max-width: 950px;
+  width: 94%;
+  margin: 25px auto;
+}
+
+.card {
+  background: white;
+  border: 1px solid #ddd7d5;
+  border-radius: 14px;
+  padding: 22px;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px #0000000b;
+}
+
+h2 {
+  color: #8f2429;
+  font-size: 21px;
+  margin-top: 0;
+}
+
+h3 {
+  color: #a33b40;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 11px;
+  border: 1px solid #ccc5c3;
+  border-radius: 8px;
+  margin-bottom: 14px;
+  font-family: inherit;
+  font-size: 15px;
+  background: white;
+}
+
+input[type=checkbox] {
+  width: auto;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 0 14px;
+}
+
+.btn {
+  background: #8f2429;
+  color: white;
+  border: 0;
+  padding: 11px 20px;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.btn.gray {
+  background: #656162;
+}
+
+.btn.green {
+  background: #496b54;
+}
+
+.btn:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.step-page {
+  display: none;
+}
+
+.step-page.active {
+  display: block;
+}
+
+.stepbar {
+  display: flex;
+  gap: 6px;
+  margin: 18px 0;
+}
+
+.step {
+  flex: 1;
+  height: 6px;
+  border-radius: 10px;
+  background: #d8d5d3;
+}
+
+.step.active {
+  background: #8f2429;
+}
+
+.checks {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 9px;
+  margin-bottom: 15px;
+}
+
+.checks label {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 11px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin: 0;
+}
+
+.upload {
+  border: 2px dashed #c9bfc0;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 12px 0;
+}
+
+.payment-box {
+  text-align: center;
+  background: #f4f2f1;
+  border: 2px solid #a33b40;
+  border-radius: 14px;
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.payment-box h1 {
+  color: #8f2429;
+  font-size: 36px;
+}
+
+.qr {
+  width: min(290px,90%);
+  height: auto;
+  background: white;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.notice {
+  background: #f7eeee;
+  border-left: 4px solid #8f2429;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  margin: 12px 0;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 10px;
+}
+
+.stat {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.stat strong {
+  color: #8f2429;
+  display: block;
+  font-size: 27px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  min-width: 650px;
+  border-collapse: collapse;
+}
+
+th,td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  font-size: 13px;
+  text-align: left;
+}
+
+th {
+  background: #f1eeee;
+  color: #8f2429;
+}
+
+footer {
+  background: #70191f;
+  color: white;
+  text-align: center;
+  padding: 18px;
+}
+
+.admin-link {
+  color: #f4dede;
+  font-size: 12px;
+  display: inline-block;
+  margin-top: 8px;
+}
+
+/* ปรับการกดปุ่มบนมือถือ */
+button {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn {
+  min-height: 46px;
+  position: relative;
+  z-index: 2;
+}
+
+.actions {
+  position: relative;
+  z-index: 5;
+}
+
+#submitBtn {
+  flex: 1;
+}
+
+#submitStatus {
+  text-align: center;
+  color: #8f2429;
+  font-size: 14px;
+  margin-top: 12px;
+  overflow-wrap: anywhere;
+}
+
+@media(max-width:600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2,1fr);
+  }
+
+  .checks {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  header h1 {
+    font-size: 19px;
+  }
+
+  .actions .btn {
+    padding: 10px 14px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <img id="schoolLogo" class="logo" alt="โลโก้โรงเรียน">
+  <h1>โรงเรียนอิสลามวิทยานุเคราะห์</h1>
+  <p>ระบบรับสมัครนักเรียนประจำปีการศึกษา2570</p>
+  <a class="admin-link" id="adminLink" href="?page=admin">
+    สำหรับเจ้าหน้าที่
+  </a>
+</header>
+
+<div class="container">
+
+<!-- ================= หน้าสมัคร ================= -->
+
+<div id="applicationPage">
+
+  <div class="notice">
+    ยินดีต้อนรับเข้าสู่ระบบรับสมัครนักเรียนประจำปีการศึกษา2570
+    กรุณากรอกข้อมูลและแนบเอกสารเพื่อยืนยันการสมัคร
+    ค่าธรรมเนียมสมัคร 200 บาท
+  </div>
+
+  <div class="stepbar" id="stepbar">
+    <div class="step active"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+    <div class="step"></div>
+  </div>
+
+  <form id="applicationForm" novalidate>
+
+    <!-- ขั้นที่ 1 -->
+    <section class="card step-page active">
+      <h2>1. ข้อมูลนักเรียน</h2>
+
+      <div class="grid">
+        <div>
+          <label>คำนำหน้า</label>
+          <select name="prefix">
+            <option value="">เลือกคำนำหน้า</option>
+            <option>เด็กชาย</option>
+            <option>เด็กหญิง</option>
+            <option>นาย</option>
+            <option>นางสาว</option>
+          </select>
+        </div>
+
+        <div>
+          <label>ชื่อ-สกุลผู้สมัคร</label>
+          <input name="name">
+        </div>
+
+        <div>
+          <label>วัน/เดือน/ปีเกิด</label>
+          <input type="date" name="birth">
+        </div>
+
+        <div>
+          <label>หมายเลขบัตรประชาชนนักเรียน</label>
+          <input name="studentID">
+        </div>
+
+        <div>
+          <label>ชื่อเล่น</label>
+          <input name="nickname">
+        </div>
+
+        <div>
+          <label>มีพี่น้องร่วมบิดามารดากี่คน</label>
+          <input type="number" name="siblings">
+        </div>
+
+        <div>
+          <label>เป็นบุตรลำดับที่เท่าไร</label>
+          <input type="number" name="order">
+        </div>
+
+        <div>
+          <label>อายุ (ปี)</label>
+          <input type="number" name="age">
+        </div>
+      </div>
+
+      <label>ที่อยู่ปัจจุบัน</label>
+      <textarea name="address" rows="3"></textarea>
+    </section>
+
+    <!-- ขั้นที่ 2 -->
+    <section class="card step-page">
+      <h2>2. ข้อมูลการศึกษา</h2>
+
+      <label>สมัครเข้าศึกษาต่อระดับชั้น</label>
+      <select name="grade">
+        <option value="">เลือกระดับชั้น</option>
+        <option>อนุบาล 1</option>
+        <option>อนุบาล 2</option>
+        <option>อนุบาล 3</option>
+        <option>ประถมศึกษาปีที่ 1</option>
+        <option>ประถมศึกษาปีที่ 2</option>
+        <option>ประถมศึกษาปีที่ 3</option>
+        <option>ประถมศึกษาปีที่ 4</option>
+        <option>ประถมศึกษาปีที่ 5</option>
+        <option>ประถมศึกษาปีที่ 6</option>
+        <option>มัธยมศึกษาปีที่ 1</option>
+        <option>มัธยมศึกษาปีที่ 2</option>
+        <option>มัธยมศึกษาปีที่ 3</option>
+        <option>มัธยมศึกษาปีที่ 4</option>
+        <option>มัธยมศึกษาปีที่ 5</option>
+        <option>มัธยมศึกษาปีที่ 6</option>
+      </select>
+
+      <label>โปรแกรมที่จะเข้าเรียน</label>
+      <select name="program">
+        <option value="">เลือกโปรแกรม</option>
+        <option value="SMP">SMP โปรแกรมวิทย์-คณิตเข้มข้น</option>
+        <option value="MQP">MQP โปรแกรมฮาฟิต</option>
+        <option value="AVP">AVP โปรแกรมอาชีพ-ภาษาต่างประเทศ</option>
+        <option value="IKS">IKS โปรแกรมกีฬาฟุตบอล</option>
+        <option value="GENERAL">ห้องทั่วไป</option>
+      </select>
+
+      <label>วุฒิการศึกษาสูงสุดที่จบ (สามัญ)</label>
+      <input name="generalEducation">
+
+      <label>วุฒิการศึกษาสูงสุดที่จบ (ศาสนา)</label>
+      <input name="religiousEducation">
+
+      <label>จบจากโรงเรียน</label>
+      <input name="oldSchool">
+    </section>
+
+    <!-- ขั้นที่ 3 -->
+    <section class="card step-page">
+      <h2>3. ข้อมูลผู้ปกครอง</h2>
+
+      <h3>ข้อมูลบิดา</h3>
+
+      <label>ชื่อ-สกุลบิดา</label>
+      <input name="fatherName">
+
+      <div class="grid">
+        <div>
+          <label>อาชีพ</label>
+          <input name="fatherJob">
+        </div>
+        <div>
+          <label>เบอร์โทร</label>
+          <input name="fatherPhone">
+        </div>
+      </div>
+
+      <label>เลขบัตรประชาชนบิดา</label>
+      <input name="fatherID">
+
+      <hr>
+
+      <h3>ข้อมูลมารดา</h3>
+
+      <label>ชื่อ-สกุลมารดา</label>
+      <input name="motherName">
+
+      <div class="grid">
+        <div>
+          <label>อาชีพ</label>
+          <input name="motherJob">
+        </div>
+        <div>
+          <label>เบอร์โทร</label>
+          <input name="motherPhone">
+        </div>
+      </div>
+
+      <label>เลขบัตรประชาชนมารดา</label>
+      <input name="motherID">
+
+      <hr>
+
+      <h3>บุคคลที่ติดต่อได้ในกรณีฉุกเฉิน</h3>
+
+      <label>ชื่อ-สกุล</label>
+      <input name="emergencyName">
+
+      <label>เบอร์โทร</label>
+      <input name="emergencyPhone">
+    </section>
+
+    <!-- ขั้นที่ 4 -->
+    <section class="card step-page">
+      <h2>4. ข้อมูลจำเป็นอื่น ๆ</h2>
+
+      <label>นักเรียนมีโรคประจำตัวหรือไม่ (หากไม่มีให้ใส่ -)</label>
+      <textarea name="disease" rows="3"></textarea>
+
+      <label>ข้อมูลที่ทางโรงเรียนควรทราบ (เลือกได้มากกว่า 1)</label>
+
+      <div class="checks">
+        <label><input type="checkbox" name="conditions" value="ปกติ"> ปกติ</label>
+        <label><input type="checkbox" name="conditions" value="กำพร้าบิดา"> กำพร้าบิดา</label>
+        <label><input type="checkbox" name="conditions" value="กำพร้ามารดา"> กำพร้ามารดา</label>
+        <label><input type="checkbox" name="conditions" value="พ่อแม่หย่าร้าง"> พ่อแม่หย่าร้าง</label>
+        <label><input type="checkbox" name="conditions" value="ยากจน"> ยากจน</label>
+      </div>
+
+      <label>ความประสงค์ในการพักอาศัย</label>
+      <select name="stay">
+        <option value="">เลือก</option>
+        <option>อยู่หอพัก</option>
+        <option>ไป-กลับ</option>
+      </select>
+    </section>
+
+    <!-- ขั้นที่ 5 -->
+    <section class="card step-page">
+      <h2>5. แนบหลักฐานและยืนยันสิทธิ์</h2>
+
+      <div class="upload">
+        <label>1. สำเนาบัตรประชาชน / สำเนาสูติบัตร (ระดับอนุบาล)</label>
+        <input type="file" id="identity"
+          accept="image/jpeg,image/png,image/webp,application/pdf">
+      </div>
+
+      <div class="upload">
+        <label>2. สำเนาทะเบียนบ้าน</label>
+        <input type="file" id="house"
+          accept="image/jpeg,image/png,image/webp,application/pdf">
+      </div>
+
+      <div class="upload">
+        <label>3. สลิปชำระเงิน</label>
+        <input type="file" id="payment"
+          accept="image/jpeg,image/png,image/webp,application/pdf">
+      </div>
+
+      <div class="payment-box">
+        <h2>ยืนยันสิทธิ์การสมัคร</h2>
+        <h1>200 บาท</h1>
+        <p>ธนาคารกรุงไทย</p>
+        <p>ชื่อบัญชี มาดีอะห์ เต๊ะมะหมัด</p>
+        <p>สแกน QR Code เพื่อชำระเงิน</p>
+
+        <img id="paymentQR" class="qr" alt="QR Code รับเงิน">
+
+        <p id="qrWarning" class="notice">
+          กรุณาตั้งค่า QR Code ใน Code.gs
+        </p>
+
+        <p>หลังชำระเงิน กรุณาแนบสลิปด้านบน</p>
+      </div>
+
+      <label style="display:flex;gap:9px;align-items:flex-start">
+        <input type="checkbox" id="consent">
+        ข้าพเจ้ายินยอมให้โรงเรียนใช้ข้อมูลเพื่อดำเนินการรับสมัคร
+      </label>
+
+      <div class="notice">
+        การส่งใบสมัครยังไม่ถือว่าได้รับการอนุมัติเข้าเรียน
+        เจ้าหน้าที่จะตรวจสอบเอกสารและการชำระเงินอีกครั้ง
+      </div>
+    </section>
+
+    <!-- ปุ่มควบคุม -->
+    <div class="actions">
+      <button type="button" class="btn gray" id="prev">
+        ย้อนกลับ
+      </button>
+
+      <button type="button" class="btn" id="next">
+        ถัดไป
+      </button>
+
+      <button type="button" class="btn green hidden" id="submitBtn">
+        ส่งใบสมัคร
+      </button>
+    </div>
+
+    <p id="submitStatus" role="status" aria-live="polite"></p>
+
+  </form>
+
+  <div id="result" class="card hidden"></div>
+</div>
+
+<!-- ================= หน้าเจ้าหน้าที่ ================= -->
+
+<div id="adminPage" class="hidden">
+
+  <section id="loginPanel" class="card">
+    <h2>เข้าสู่ระบบเจ้าหน้าที่</h2>
+
+    <label>รหัสผ่าน</label>
+    <input type="password" id="adminPassword">
+
+    <button type="button" class="btn" id="loginBtn">
+      เข้าสู่ระบบ
+    </button>
+
+    <p id="loginError"></p>
+  </section>
+
+  <section id="dashboard" class="hidden">
+
+    <div class="actions">
+      <h2>Dashboard เจ้าหน้าที่</h2>
+      <button type="button" class="btn gray" id="logoutBtn">
+        ออกจากระบบ
+      </button>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <strong id="total">0</strong>
+        ผู้สมัครทั้งหมด
+      </div>
+
+      <div class="stat">
+        <strong id="pending">0</strong>
+        รอตรวจสอบ
+      </div>
+
+      <div class="stat">
+        <strong id="approved">0</strong>
+        อนุมัติ
+      </div>
+
+      <div class="stat">
+        <strong id="rejected">0</strong>
+        ไม่อนุมัติ
+      </div>
+    </div>
+
+    <section class="card" style="margin-top:20px">
+      <h2>ค้นหาใบสมัคร</h2>
+
+      <div class="grid">
+        <input id="search" placeholder="ค้นหาชื่อหรือรหัสสมัคร">
+
+        <select id="filter">
+          <option value="">ทุกสถานะ</option>
+          <option>รอตรวจสอบ</option>
+          <option>อนุมัติ</option>
+          <option>ไม่อนุมัติ</option>
+        </select>
+      </div>
+
+      <button type="button" class="btn gray" id="refreshBtn">
+        รีเฟรชข้อมูล
+      </button>
+
+      <div class="table-wrap" style="margin-top:15px">
+        <table>
+          <thead>
+            <tr>
+              <th>รหัสสมัคร</th>
+              <th>ชื่อ-สกุล</th>
+              <th>ระดับชั้น</th>
+              <th>โปรแกรม</th>
+              <th>สถานะ</th>
+              <th>รายละเอียด</th>
+            </tr>
+          </thead>
+          <tbody id="studentTable"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="detail" class="card hidden">
+      <h2>รายละเอียดใบสมัคร</h2>
+
+      <div id="detailContent"></div>
+
+      <label>หมายเหตุเจ้าหน้าที่</label>
+      <textarea id="note"></textarea>
+
+      <label>สถานะใบสมัคร</label>
+      <select id="newStatus">
+        <option>รอตรวจสอบ</option>
+        <option>อนุมัติ</option>
+        <option>ไม่อนุมัติ</option>
+      </select>
+
+      <div class="actions">
+        <button type="button" class="btn green" id="saveStatusBtn">
+          บันทึกผล
+        </button>
+        <button type="button" class="btn gray" id="closeDetailBtn">
+          ปิด
+        </button>
+      </div>
+    </section>
+
+  </section>
+</div>
+
+</div>
+
+<footer>
+  โรงเรียนอิสลามวิทยานุเคราะห์
+</footer>
+
+<script>
+// ===========================================
+// 1. เริ่มต้นระบบ
+// ===========================================
+
+const params = new URLSearchParams(window.location.search);
+const isAdmin = params.get("page") === "admin";
+
+if (isAdmin) {
+  document.getElementById("applicationPage").classList.add("hidden");
+  document.getElementById("adminPage").classList.remove("hidden");
+  document.getElementById("adminLink").classList.add("hidden");
+}
+
+// ===========================================
+// 2. โหลดโลโก้และ QR Code
+// ===========================================
+
+google.script.run
+  .withSuccessHandler(function(data) {
+    if (data) {
+      document.getElementById("schoolLogo").src = data;
+    }
+  })
+  .withFailureHandler(function(error) {
+    console.error("โหลดโลโก้ไม่สำเร็จ", error);
+  })
+  .getImageDataFromConfig("logo");
+
+google.script.run
+  .withSuccessHandler(function(data) {
+    if (data) {
+      document.getElementById("paymentQR").src = data;
+      document.getElementById("qrWarning").classList.add("hidden");
+    }
+  })
+  .withFailureHandler(function(error) {
+    console.error("โหลด QR Code ไม่สำเร็จ", error);
+  })
+  .getImageDataFromConfig("qr");
+
+// ===========================================
+// 3. ระบบเปลี่ยนหน้า 5 ขั้นตอน
+// ===========================================
+
+let currentStep = 0;
+
+const pages = Array.from(
+  document.querySelectorAll(".step-page")
+);
+
+const bars = Array.from(
+  document.querySelectorAll(".step")
+);
+
+const prevButton = document.getElementById("prev");
+const nextButton = document.getElementById("next");
+const submitButton = document.getElementById("submitBtn");
+
+function showStep() {
+
+  pages.forEach(function(page,index) {
+    page.classList.toggle(
+      "active",
+      index === currentStep
+    );
+  });
+
+  bars.forEach(function(bar,index) {
+    bar.classList.toggle(
+      "active",
+      index <= currentStep
+    );
+  });
+
+  prevButton.style.visibility =
+    currentStep === 0 ? "hidden" : "visible";
+
+  nextButton.classList.toggle(
+    "hidden",
+    currentStep === pages.length - 1
+  );
+
+  submitButton.classList.toggle(
+    "hidden",
+    currentStep !== pages.length - 1
+  );
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+}
+
+// ปุ่มถัดไป
+nextButton.addEventListener("click", function() {
+  if (currentStep < pages.length - 1) {
+    currentStep++;
+    showStep();
+  }
+});
+
+// ปุ่มย้อนกลับ
+prevButton.addEventListener("click", function() {
+  if (currentStep > 0) {
+    currentStep--;
+    showStep();
+  }
+});
+
+// ===========================================
+// 4. อ่านไฟล์แนบ
+// ===========================================
+
+function readFile(id) {
+  return new Promise(function(resolve,reject) {
+
+    const input = document.getElementById(id);
+    const file = input.files[0];
+
+    if (!file) {
+      reject(new Error("กรุณาแนบไฟล์ทั้ง 3 รายการ"));
+      return;
+    }
+
+    const allowed = [
+      "image/jpeg",
+      "image/png",
+      "image/webp",
+      "application/pdf"
+    ];
+
+    if (!allowed.includes(file.type)) {
+      const isHeic = /\.(heic|heif)$/i.test(file.name || "");
+
+      reject(new Error(
+        isHeic
+          ? "ไฟล์ iPhone เป็น HEIC ซึ่งระบบยังไม่รองรับ กรุณาแปลงเป็น JPG หรือเลือกภาพแบบ Most Compatible"
+          : "รองรับเฉพาะ JPG, PNG, WEBP และ PDF กรุณาเลือกไฟล์ใหม่"
+      ));
+
+      return;
+    }
+
+    if (file.size > 5 * 1024 * 1024) {
+      reject(new Error("ไฟล์ต้องมีขนาดไม่เกิน 5 MB"));
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = function() {
+      resolve({
+        name: file.name,
+        mimeType: file.type,
+        data: reader.result.split(",")[1]
+      });
+    };
+
+    reader.onerror = function() {
+      reject(new Error("ไม่สามารถอ่านไฟล์ได้"));
+    };
+
+    reader.readAsDataURL(file);
+  });
+}
+
+// ===========================================
+// 5. ป้องกัน HTML แปลกปลอมในข้อมูล
+// ===========================================
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g,function(c) {
+    return {
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#39;"
+    }[c];
+  });
+}
+
+// ===========================================
+// 6. ส่งใบสมัคร รองรับมือถือและคอมพิวเตอร์
+// ===========================================
+
+let isSubmitting = false;
+
+async function sendApplication() {
+
+  if (isSubmitting) return;
+
+  const form = document.getElementById("applicationForm");
+  const status = document.getElementById("submitStatus");
+
+  if (!document.getElementById("consent").checked) {
+    alert("กรุณายืนยันความยินยอมก่อนส่งใบสมัคร");
+    return;
+  }
+
+  // ตรวจสอบไฟล์แนบให้ครบก่อนเริ่มส่ง
+  const fileIds = ["identity", "house", "payment"];
+
+  for (const id of fileIds) {
+    const input = document.getElementById(id);
+
+    if (!input.files || !input.files.length) {
+      alert("กรุณาแนบเอกสารให้ครบทั้ง 3 รายการ");
+      input.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
+      return;
+    }
+  }
+
+  isSubmitting = true;
+  submitButton.disabled = true;
+  submitButton.textContent = "กำลังเตรียมข้อมูล...";
+  status.textContent = "กำลังเตรียมใบสมัคร กรุณารอสักครู่";
+
+  try {
+
+    const formData = new FormData(form);
+    const data = {};
+
+    for (const [key, value] of formData.entries()) {
+      if (key !== "conditions") {
+        data[key] = value;
+      }
+    }
+
+    data.conditions = Array.from(
+      document.querySelectorAll(
+        'input[name="conditions"]:checked'
+      )
+    ).map(function(item) {
+      return item.value;
+    });
+
+    status.textContent = "กำลังอ่านเอกสาร 1 จาก 3...";
+    const identity = await readFile("identity");
+
+    status.textContent = "กำลังอ่านเอกสาร 2 จาก 3...";
+    const house = await readFile("house");
+
+    status.textContent = "กำลังอ่านเอกสาร 3 จาก 3...";
+    const payment = await readFile("payment");
+
+    data.documents = {
+      identity: identity,
+      house: house,
+      payment: payment
+    };
+
+    if (
+      typeof google === "undefined" ||
+      !google.script ||
+      !google.script.run
+    ) {
+      throw new Error(
+        "ไม่สามารถเชื่อมต่อระบบได้ กรุณาเปิดผ่านลิงก์ Web App ของ Google Apps Script"
+      );
+    }
+
+    status.textContent =
+      "กำลังบันทึกใบสมัคร กรุณาอย่าปิดหน้านี้";
+
+    submitButton.textContent = "กำลังส่งข้อมูล...";
+
+    google.script.run
+      .withSuccessHandler(function(result) {
+
+        isSubmitting = false;
+
+        form.classList.add("hidden");
+
+        document.getElementById("stepbar")
+          .classList.add("hidden");
+
+        const box = document.getElementById("result");
+
+        box.classList.remove("hidden");
+
+        box.innerHTML = `
+          <div style="text-align:center;padding:25px">
+            <h2 style="color:#28784a">
+              ส่งใบสมัครเรียบร้อยแล้ว
+            </h2>
+
+            <p>รหัสใบสมัครของท่าน</p>
+
+            <h1>${esc(result.applicationId)}</h1>
+
+            <p>สถานะ: รอตรวจสอบ</p>
+
+            <p>กรุณาบันทึกรหัสสมัครไว้</p>
+          </div>
+        `;
+
+        status.textContent = "";
+
+        window.scrollTo(0, 0);
+      })
+      .withFailureHandler(function(error) {
+
+        isSubmitting = false;
+
+        submitButton.disabled = false;
+        submitButton.textContent = "ส่งใบสมัคร";
+
+        status.textContent =
+          "ส่งใบสมัครไม่สำเร็จ กรุณาตรวจสอบแล้วลองใหม่";
+
+        alert(
+          "เกิดข้อผิดพลาด: " +
+          (error.message || "ไม่สามารถส่งข้อมูลได้")
+        );
+      })
+      .submitApplication(data);
+
+  } catch (error) {
+
+    isSubmitting = false;
+
+    submitButton.disabled = false;
+    submitButton.textContent = "ส่งใบสมัคร";
+
+    status.textContent =
+      error.message || "เกิดข้อผิดพลาด กรุณาลองใหม่";
+
+    alert(status.textContent);
+  }
+}
+
+// ผูก click โดยตรง ป้องกันปัญหาการกดส่งบน Safari/iPhone
+submitButton.addEventListener("click", function(event) {
+  event.preventDefault();
+  sendApplication();
+});
+
+// ป้องกันการ submit แบบอัตโนมัติจากปุ่มหรือคีย์บอร์ด
+document.getElementById("applicationForm")
+  .addEventListener("submit", function(event) {
+    event.preventDefault();
+  });
+
+// ===========================================
+// 7. ระบบเจ้าหน้าที่
+// ===========================================
+
+let adminToken = "";
+let students = [];
+let selectedStudent = null;
+
+function adminLogin() {
+
+  const password =
+    document.getElementById("adminPassword").value;
+
+  google.script.run
+    .withSuccessHandler(function(token) {
+
+      adminToken = token;
+
+      sessionStorage.setItem("adminToken",token);
+
+      document.getElementById("loginPanel")
+        .classList.add("hidden");
+
+      document.getElementById("dashboard")
+        .classList.remove("hidden");
+
+      loadDashboard();
+    })
+    .withFailureHandler(function(error) {
+
+      document.getElementById("loginError").textContent =
+        error.message;
+    })
+    .adminLogin(password);
+}
+
+document.getElementById("loginBtn")
+  .addEventListener("click",adminLogin);
+
+document.getElementById("logoutBtn")
+  .addEventListener("click",logout);
+
+document.getElementById("refreshBtn")
+  .addEventListener("click",loadDashboard);
+
+document.getElementById("search")
+  .addEventListener("input",renderTable);
+
+document.getElementById("filter")
+  .addEventListener("change",renderTable);
+
+document.getElementById("saveStatusBtn")
+  .addEventListener("click",saveStatus);
+
+document.getElementById("closeDetailBtn")
+  .addEventListener("click",closeDetail);
+
+function logout() {
+
+  adminToken = "";
+
+  sessionStorage.removeItem("adminToken");
+
+  document.getElementById("dashboard")
+    .classList.add("hidden");
+
+  document.getElementById("loginPanel")
+    .classList.remove("hidden");
+}
+
+function loadDashboard() {
+
+  if (!adminToken) return;
+
+  google.script.run
+    .withSuccessHandler(function(data) {
+
+      students = data.students;
+
+      document.getElementById("total").textContent =
+        data.total;
+
+      document.getElementById("pending").textContent =
+        data.pending;
+
+      document.getElementById("approved").textContent =
+        data.approved;
+
+      document.getElementById("rejected").textContent =
+        data.rejected;
+
+      renderTable();
+    })
+    .withFailureHandler(function(error) {
+
+      alert(error.message);
+      logout();
+    })
+    .getDashboard(adminToken);
+}
+
+function renderTable() {
+
+  const search =
+    document.getElementById("search").value.toLowerCase();
+
+  const filter =
+    document.getElementById("filter").value;
+
+  const list = students.filter(function(s) {
+
+    const text = (
+      s.id + " " + s.name + " " + s.studentID
+    ).toLowerCase();
+
+    return text.includes(search) &&
+      (!filter || s.status === filter);
+  });
+
+  document.getElementById("studentTable").innerHTML =
+    list.map(function(s) {
+
+      return `
+        <tr>
+          <td>${esc(s.id)}</td>
+          <td>${esc(s.name)}</td>
+          <td>${esc(s.grade)}</td>
+          <td>${esc(s.program)}</td>
+          <td>${esc(s.status)}</td>
+          <td>
+            <button
+              type="button"
+              class="btn"
+              data-student-id="${esc(s.id)}">
+              เปิดดู
+            </button>
+          </td>
+        </tr>
+      `;
+    }).join("") ||
+    "<tr><td colspan='6'>ไม่พบข้อมูล</td></tr>";
+}
+
+// เปิดรายละเอียดใบสมัคร
+document.getElementById("studentTable")
+  .addEventListener("click",function(event) {
+
+    const button = event.target.closest("[data-student-id]");
+
+    if (!button) return;
+
+    openDetail(button.dataset.studentId);
+  });
+
+function openDetail(id) {
+
+  selectedStudent = students.find(function(s) {
+    return s.id === id;
+  });
+
+  if (!selectedStudent) return;
+
+  const s = selectedStudent;
+
+  const docs = [
+    ["บัตรประชาชน/สูติบัตร",s.identity],
+    ["ทะเบียนบ้าน",s.house],
+    ["สลิปชำระเงิน",s.payment]
+  ];
+
+  document.getElementById("detailContent").innerHTML = `
+    <p><b>รหัสสมัคร:</b> ${esc(s.id)}</p>
+    <p><b>ชื่อ:</b> ${esc(s.name)}</p>
+    <p><b>เลขบัตรนักเรียน:</b> ${esc(s.studentID)}</p>
+    <p><b>วันเกิด:</b> ${esc(s.birth)}</p>
+    <p><b>อายุ:</b> ${esc(s.age)}</p>
+    <p><b>ระดับชั้น:</b> ${esc(s.grade)}</p>
+    <p><b>โปรแกรม:</b> ${esc(s.program)}</p>
+    <p><b>ที่อยู่:</b> ${esc(s.address)}</p>
+    <p><b>บิดา:</b> ${esc(s.fatherName)} โทร ${esc(s.fatherPhone)}</p>
+    <p><b>มารดา:</b> ${esc(s.motherName)} โทร ${esc(s.motherPhone)}</p>
+    <p><b>ติดต่อฉุกเฉิน:</b> ${esc(s.emergencyName)} โทร ${esc(s.emergencyPhone)}</p>
+    <p><b>โรคประจำตัว:</b> ${esc(s.disease)}</p>
+    <p><b>ข้อมูลเพิ่มเติม:</b> ${esc(s.conditions)}</p>
+    <p><b>การพัก:</b> ${esc(s.stay)}</p>
+
+    <h3>เอกสารหลักฐาน</h3>
+
+    ${docs.map(function(item) {
+      return `
+        <p>
+          ${esc(item[0])}:
+          ${item[1]
+            ? `<a href="${esc(item[1])}" target="_blank" rel="noopener">เปิดเอกสาร</a>`
+            : "ไม่มีไฟล์"}
+        </p>
+      `;
+    }).join("")}
+  `;
+
+  document.getElementById("note").value = s.note || "";
+
+  document.getElementById("newStatus").value = s.status;
+
+  document.getElementById("detail")
+    .classList.remove("hidden");
+
+  document.getElementById("detail")
+    .scrollIntoView({behavior:"smooth"});
+}
+
+// บันทึกสถานะ
+function saveStatus() {
+
+  if (!selectedStudent) return;
+
+  google.script.run
+    .withSuccessHandler(function(message) {
+
+      alert(message);
+
+      closeDetail();
+      loadDashboard();
+    })
+    .withFailureHandler(function(error) {
+
+      alert(error.message);
+    })
+    .updateApplication(
+      adminToken,
+      selectedStudent.row,
+      document.getElementById("newStatus").value,
+      document.getElementById("note").value
+    );
+}
+
+function closeDetail() {
+
+  document.getElementById("detail")
+    .classList.add("hidden");
+
+  selectedStudent = null;
+}
+
+// ===========================================
+// 8. ตรวจสอบการเข้าสู่ระบบเจ้าหน้าที่เดิม
+// ===========================================
+
+if (isAdmin) {
+
+  const savedToken = sessionStorage.getItem("adminToken");
+
+  if (savedToken) {
+
+    adminToken = savedToken;
+
+    google.script.run
+      .withSuccessHandler(function(ok) {
+
+        if (ok) {
+
+          document.getElementById("loginPanel")
+            .classList.add("hidden");
+
+          document.getElementById("dashboard")
+            .classList.remove("hidden");
+
+          loadDashboard();
+
+        } else {
+
+          logout();
+        }
+      })
+      .withFailureHandler(function() {
+
+        logout();
+      })
+      .checkAdmin(adminToken);
+  }
+}
+
+// ===========================================
+// 9. เริ่มต้นแสดงหน้าสมัคร
+// ===========================================
+
+showStep();
+
+</script>
+</body>
+</html>
+
+/*******************************************************
+ * ระบบรับสมัครนักเรียนประจำปีการศึกษา2570
+ * โรงเรียนอิสลามวิทยานุเคราะห์
+ *******************************************************/
+
+// 1. ตั้งค่าระบบ
+const CONFIG = {
+  SCHOOL_NAME: "โรงเรียนอิสลามวิทยานุเคราะห์",
+  SHEET_NAME: "Students",
+  FOLDER_NAME: "ระบบรับสมัครนักเรียนประจำปีการศึกษา2570",
+  ADMIN_PASSWORD: "CHANGE_ME_2828",
+  MAX_FILE_SIZE: 5 * 1024 * 1024,
+  TIMEZONE: "Asia/Bangkok"
+};
+
+// 2. หัวตาราง Google Sheets
+const HEADERS = [
+  "รหัสสมัคร", "วันเวลาสมัคร", "คำนำหน้า", "ชื่อ-สกุล",
+  "วันเกิด", "เลขบัตรนักเรียน", "ชื่อเล่น", "จำนวนพี่น้อง",
+  "ลำดับบุตร", "อายุ", "ที่อยู่", "ระดับชั้น", "โปรแกรม",
+  "วุฒิสามัญ", "วุฒิศาสนา", "โรงเรียนเดิม",
+  "ชื่อบิดา", "อาชีพบิดา", "โทรบิดา", "บัตรบิดา",
+  "ชื่อมารดา", "อาชีพมารดา", "โทรมารดา", "บัตรมารดา",
+  "ผู้ติดต่อฉุกเฉิน", "โทรฉุกเฉิน", "โรคประจำตัว",
+  "ข้อมูลเพิ่มเติม", "ประเภทการพัก",
+  "บัตรประชาชนหรือสูติบัตร", "ทะเบียนบ้าน",
+  "สลิปชำระเงิน", "สถานะ", "หมายเหตุ", "Folder ID"
+];
+
+// 3. เปิดเว็บไซต์
+function doGet() {
+  return HtmlService
+    .createHtmlOutputFromFile("Index")
+    .setTitle(CONFIG.SCHOOL_NAME + " | ระบบรับสมัครนักเรียน ประจำปีการศึกษา 2570")
+    .addMetaTag("viewport", "width=device-width, initial-scale=1");
+}
+
+// 4. โลโก้และ QR Code
+function getImageDataFromConfig(type) {
+  if (type === "logo") {
+    return "https://i.postimg.cc/ZJnPm3rK/images-Photoroom.png";
+  }
+
+  if (type === "qr") {
+    return "https://i.postimg.cc/44n4yJwK/13.png";
+  }
+
+  return "";
+}
+
+// 5. สร้างหรือเชื่อมต่อชีต
+function getStudentSheet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  if (!ss) {
+    throw new Error("ไม่พบ Google Sheets กรุณาเปิด Apps Script จากไฟล์ฐานข้อมูล");
+  }
+
+  let sheet = ss.getSheetByName(CONFIG.SHEET_NAME);
+
+  if (!sheet) {
+    sheet = ss.insertSheet(CONFIG.SHEET_NAME);
+  }
+
+  if (sheet.getLastRow() === 0) {
+    sheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
+    sheet.setFrozenRows(1);
+
+    sheet.getRange(1, 1, 1, HEADERS.length)
+      .setBackground("#8F2429")
+      .setFontColor("#FFFFFF")
+      .setFontWeight("bold");
+
+    sheet.autoResizeColumns(1, HEADERS.length);
+  }
+
+  return sheet;
+}
+
+// 6. สร้างโฟลเดอร์หลักใน Google Drive
+function getMainFolder() {
+  const props = PropertiesService.getScriptProperties();
+  let folderId = props.getProperty("MAIN_FOLDER_ID");
+
+  if (folderId) {
+    try {
+      return DriveApp.getFolderById(folderId);
+    } catch (error) {
+      props.deleteProperty("MAIN_FOLDER_ID");
+    }
+  }
+
+  const folders = DriveApp.getFoldersByName(CONFIG.FOLDER_NAME);
+  let folder;
+
+  if (folders.hasNext()) {
+    folder = folders.next();
+  } else {
+    folder = DriveApp.createFolder(CONFIG.FOLDER_NAME);
+  }
+
+  props.setProperty("MAIN_FOLDER_ID", folder.getId());
+  return folder;
+}
+
+// 7. ติดตั้งระบบครั้งแรก
+function setupSystem() {
+  getStudentSheet();
+  getMainFolder();
+  return "ติดตั้งระบบเรียบร้อยแล้ว";
+}
+
+// 8. บันทึกไฟล์ลง Google Drive
+function saveFile(file, folder, filename) {
+  if (!file || !file.data) {
+    throw new Error("กรุณาแนบไฟล์ " + filename);
+  }
+
+  const allowedTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp",
+    "application/pdf"
+  ];
+
+  if (!allowedTypes.includes(file.mimeType)) {
+    throw new Error(
+      "ไฟล์ " + filename +
+      " ต้องเป็น JPG, PNG, WEBP หรือ PDF (ไม่รองรับ HEIC)"
+    );
+  }
+
+  const bytes = Utilities.base64Decode(file.data);
+
+  if (bytes.length > CONFIG.MAX_FILE_SIZE) {
+    throw new Error("ไฟล์ " + filename + " ต้องมีขนาดไม่เกิน 5 MB");
+  }
+
+  let extension = ".jpg";
+
+  if (file.mimeType === "image/png") extension = ".png";
+  if (file.mimeType === "image/webp") extension = ".webp";
+  if (file.mimeType === "application/pdf") extension = ".pdf";
+
+  const blob = Utilities.newBlob(
+    bytes,
+    file.mimeType,
+    filename + extension
+  );
+
+  return folder.createFile(blob);
+}
+
+// 9. ส่งใบสมัครนักเรียน
+function submitApplication(data) {
+  const lock = LockService.getScriptLock();
+  lock.waitLock(30000);
+
+  let folder = null;
+
+  try {
+    if (!data || !data.documents) {
+      throw new Error("ไม่พบข้อมูลหรือเอกสารแนบ");
+    }
+
+    const sheet = getStudentSheet();
+
+    const id =
+      "IW" +
+      Utilities.formatDate(
+        new Date(),
+        CONFIG.TIMEZONE,
+        "yyyyMMddHHmmss"
+      ) +
+      Math.floor(100 + Math.random() * 900);
+
+    // สร้างโฟลเดอร์ประจำใบสมัคร
+    folder = getMainFolder().createFolder(id);
+
+    // บันทึกเอกสาร 3 รายการ
+    const identity = saveFile(
+      data.documents.identity,
+      folder,
+      "บัตรประชาชนหรือสูติบัตร"
+    );
+
+    const house = saveFile(
+      data.documents.house,
+      folder,
+      "ทะเบียนบ้าน"
+    );
+
+    const payment = saveFile(
+      data.documents.payment,
+      folder,
+      "สลิปชำระเงิน"
+    );
+
+    // เตรียมข้อมูลบันทึกลงชีต
+    const row = [
+      id,
+      new Date(),
+      data.prefix || "",
+      data.name || "",
+      data.birth || "",
+      data.studentID || "",
+      data.nickname || "",
+      data.siblings || "",
+      data.order || "",
+      data.age || "",
+      data.address || "",
+      data.grade || "",
+      data.program || "",
+      data.generalEducation || "",
+      data.religiousEducation || "",
+      data.oldSchool || "",
+      data.fatherName || "",
+      data.fatherJob || "",
+      data.fatherPhone || "",
+      data.fatherID || "",
+      data.motherName || "",
+      data.motherJob || "",
+      data.motherPhone || "",
+      data.motherID || "",
+      data.emergencyName || "",
+      data.emergencyPhone || "",
+      data.disease || "",
+      (data.conditions || []).join(", "),
+      data.stay || "",
+      identity.getUrl(),
+      house.getUrl(),
+      payment.getUrl(),
+      "รอตรวจสอบ",
+      "",
+      folder.getId()
+    ];
+
+    sheet.appendRow(row);
+
+    return {
+      success: true,
+      applicationId: id
+    };
+
+  } catch (error) {
+    if (folder) {
+      try {
+        folder.setTrashed(true);
+      } catch (e) {}
+    }
+
+    throw new Error(error.message || "ไม่สามารถบันทึกใบสมัครได้");
+
+  } finally {
+    lock.releaseLock();
+  }
+}
+
+// 10. เข้าสู่ระบบเจ้าหน้าที่
+function adminLogin(password) {
+  if (String(password) !== CONFIG.ADMIN_PASSWORD) {
+    throw new Error("รหัสผ่านไม่ถูกต้อง");
+  }
+
+  const token = Utilities.getUuid();
+
+  CacheService.getScriptCache().put(
+    "ADMIN_" + token,
+    "TRUE",
+    21600
+  );
+
+  return token;
+}
+
+// 11. ตรวจสอบสิทธิ์เจ้าหน้าที่
+function checkAdmin(token) {
+  return !!token &&
+    CacheService.getScriptCache().get("ADMIN_" + token) === "TRUE";
+}
+
+function requireAdmin(token) {
+  if (!checkAdmin(token)) {
+    throw new Error("กรุณาเข้าสู่ระบบใหม่");
+  }
+}
+
+// 12. ข้อมูล Dashboard
+function getDashboard(token) {
+  requireAdmin(token);
+
+  const sheet = getStudentSheet();
+  const lastRow = sheet.getLastRow();
+
+  if (lastRow < 2) {
+    return {
+      total: 0,
+      pending: 0,
+      approved: 0,
+      rejected: 0,
+      students: []
+    };
+  }
+
+  const values = sheet.getRange(
+    2, 1, lastRow - 1, HEADERS.length
+  ).getValues();
+
+  const students = values.map(function(r, index) {
+    return {
+      row: index + 2,
+      id: String(r[0] || ""),
+      date: r[1] instanceof Date
+        ? Utilities.formatDate(r[1], CONFIG.TIMEZONE, "dd/MM/yyyy HH:mm")
+        : String(r[1] || ""),
+      name: String(r[3] || ""),
+      studentID: String(r[5] || ""),
+      grade: String(r[11] || ""),
+      program: String(r[12] || ""),
+      status: String(r[32] || "รอตรวจสอบ"),
+      identity: String(r[29] || ""),
+      house: String(r[30] || ""),
+      payment: String(r[31] || ""),
+      note: String(r[33] || ""),
+      birth: String(r[4] || ""),
+      age: String(r[9] || ""),
+      address: String(r[10] || ""),
+      fatherName: String(r[16] || ""),
+      fatherPhone: String(r[18] || ""),
+      motherName: String(r[20] || ""),
+      motherPhone: String(r[22] || ""),
+      emergencyName: String(r[24] || ""),
+      emergencyPhone: String(r[25] || ""),
+      disease: String(r[26] || ""),
+      conditions: String(r[27] || ""),
+      stay: String(r[28] || "")
+    };
+  }).reverse();
+
+  return {
+    total: students.length,
+    pending: students.filter(s => s.status === "รอตรวจสอบ").length,
+    approved: students.filter(s => s.status === "อนุมัติ").length,
+    rejected: students.filter(s => s.status === "ไม่อนุมัติ").length,
+    students: students
+  };
+}
+
+// 13. เปลี่ยนสถานะใบสมัคร
+function updateApplication(token, rowNumber, status, note) {
+  requireAdmin(token);
+
+  const allowed = [
+    "รอตรวจสอบ",
+    "อนุมัติ",
+    "ไม่อนุมัติ"
+  ];
+
+  if (!allowed.includes(status)) {
+    throw new Error("สถานะไม่ถูกต้อง");
+  }
+
+  const sheet = getStudentSheet();
+  const row = Number(rowNumber);
+
+  if (
+    !Number.isInteger(row) ||
+    row < 2 ||
+    row > sheet.getLastRow()
+  ) {
+    throw new Error("ไม่พบใบสมัคร");
+  }
+
+  sheet.getRange(row, 33).setValue(status);
+  sheet.getRange(row, 34).setValue(note || "");
+
+  return "บันทึกสถานะเรียบร้อย";
+}
+
+// 14. ทดสอบระบบรูปภาพ
+function testImages() {
+  Logger.log("โลโก้: " + getImageDataFromConfig("logo"));
+  Logger.log("QR Code: " + getImageDataFromConfig("qr"));
+  return "ตั้งค่ารูปภาพเรียบร้อย";
+}
